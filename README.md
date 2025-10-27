@@ -31,7 +31,11 @@ A [React](https://reactjs.org/)-based movie browsing application with GraphQL in
 - **Accessibility** - Implement [ARIA labels](https://www.w3.org/TR/wai-aria-1.2/) on interactive elements & screen reader testing.
 - **CI/CD** - Implement continuous integration and deployment pipelines for automated testing and deployment.
 - **Tech Stack** - Evaluate the app based on business requirements to determine if this is better suited as a [Next.js](https://nextjs.org/) application.
-- **Enhanced Movie Posters & Trailers** - Evaluate the [TMDB API](https://developer.themoviedb.org/reference/getting-started) as a potential tool for supplementing missing movie posters and descriptions, as well as enabling trailer playback in a modal window.
+- **User Experience Enhancements**:
+  - Implement sorting by title, release date, rating, etc...
+  - Update MovieFilterInput of backend GraphQL server to support searching by actors, directors, writers, publish year, etc...
+  - Evaluate the [TMDB API](https://developer.themoviedb.org/reference/getting-started) as a potential tool for supplementing missing movie posters and descriptions, as well as enabling trailer playback in a modal window.
+  - Implement lazy loading for movie posters and descriptions to improve initial page load times.
 - **State Management** - In the event that BITFLIX becomes more complex, consider implementing more robust state management solutions ([Redux](https://redux.js.org/), [Zustand](https://github.com/pmndrs/zustand), etc..) to handle complex state interactions.
 
 ---
