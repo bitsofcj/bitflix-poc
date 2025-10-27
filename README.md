@@ -14,7 +14,7 @@ A [React](https://reactjs.org/)-based movie browsing application with GraphQL in
 
 ### Highlights
 
-- **Filter & Realtime Search** - The filter and search functionality work together to allow for searching all movies or filtering by genre, updating movie counts in real-time.
+- **Filter & Realtime Search** - The filter and search functionality work together to allow for searching all movies or searching within a filteredgenre, updating movie counts in real-time.
 - **User Experience** - The BITFLIX experience is designed to be intuitive and user-friendly, with a focus on providing a seamless and enjoyable movie browsing experience similar to popular streaming platforms.
 - **API Proxy** - The API proxy protects the external API authentication & features rate limiting and request timeouts to ensure optimal performance and reliability.
 
