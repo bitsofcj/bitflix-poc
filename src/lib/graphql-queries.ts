@@ -15,6 +15,9 @@ export const GET_MOVIES_WITH_COUNT = gql`
         rating
         ratingValue
         datePublished
+        mainActors
+        directors
+        writers
         genres {
           id
           title

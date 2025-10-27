@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Clock, Star, Play } from 'lucide-react';
+import { Clock, Star, Play, Clapperboard, Users } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import type { Movie } from '@/lib/graphql-types';
@@ -44,13 +44,13 @@ export default function MovieCard({ movie }: MovieCardProps) {
             </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center justify-center -translate-y-8">
               <div className="bg-purple-600 rounded-full p-2 shadow-lg">
                 <Play className="h-4 w-4 text-white fill-white" />
               </div>
             </div>
             <div className="absolute bottom-0 left-0 right-0 p-3 space-y-2">
-              <p className="text-xs text-foreground line-clamp-6 leading-relaxed drop-shadow-lg">
+              <p className="text-xs text-foreground line-clamp-4 leading-relaxed drop-shadow-lg">
                 {movie.summary || 'No summary available'}
               </p>
               <div className="flex flex-wrap gap-1">
@@ -64,6 +64,26 @@ export default function MovieCard({ movie }: MovieCardProps) {
                   </Badge>
                 ))}
               </div>
+              {(movie.directors?.length || movie.mainActors?.length) && (
+                <div className="space-y-1 text-xs text-foreground/90 drop-shadow-lg">
+                  {movie.directors && movie.directors.length > 0 && (
+                    <div className="flex items-start gap-1.5">
+                      <Clapperboard className="h-3 w-3 mt-0.5 flex-shrink-0" />
+                      <span className="line-clamp-1">
+                        {movie.directors.slice(0, 1).join(', ')}
+                      </span>
+                    </div>
+                  )}
+                  {movie.mainActors && movie.mainActors.length > 0 && (
+                    <div className="flex items-start gap-1.5">
+                      <Users className="h-3 w-3 mt-0.5 flex-shrink-0" />
+                      <span className="line-clamp-1">
+                        {movie.mainActors.slice(0, 3).join(', ')}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
           {movie.ratingValue !== null && (

@@ -13,6 +13,9 @@ const mockMovie: Movie = {
   rating: 'PG-13',
   ratingValue: 8.8,
   datePublished: '2010-07-16T00:00:00.000Z',
+  mainActors: ['Leonardo DiCaprio', 'Joseph Gordon-Levitt', 'Elliot Page'],
+  directors: ['Christopher Nolan'],
+  writers: ['Christopher Nolan'],
   genres: [
     { id: '1', title: 'Action' },
     { id: '2', title: 'Sci-Fi' },
