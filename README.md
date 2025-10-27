@@ -23,7 +23,9 @@ A React-based movie browsing application with GraphQL integration, featuring sea
 - **Caching** - More granular and robust caching strategies in the API proxy and frontend.
 - **Security** - Add helmet.js for security headers | Document other security considerations.
 - **Documentation** - Comprehensive external documentation for business and developer users with detailed diagrams and examples.
+- **Analytics** - Implement Google Analytics, Microsoft Clarity or any other analytics tool(s) for tracking user behavior and improving the BITFLIX experience.
 - **Observability** - Structured logging (winston or pino) | Performance monitoring (Datadog, New Relic, etc...) | Update health check endpoint to check dependencies and provide information about the application's status.
+- **SEO** - Implement additional SEO best practices for improved search engine rankings.
 - **Accessibility** - ARIA labels on interactive elements & screen reader testing.
 - **Tech Stack** - Evaluate the app based on business requirements to determine if this is better suited as a Next.js application.
 

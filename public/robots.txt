@@ -1,3 +1,11 @@
 # https://www.robotstxt.org/robotstxt.html
+
+# Allow all robots to crawl the site
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap location (update this URL after creating a sitemap)
+# TODO: Sitemap: https://bitflix.bitsofcj.com/sitemap.xml
+
+# Crawl delay (in seconds) - optional, to be polite to servers
+Crawl-delay: 1
