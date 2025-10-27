@@ -5,21 +5,22 @@ const httpLink = new HttpLink({
   uri: process.env.REACT_APP_GRAPHQL_URL || 'http://localhost:3000/graphql',
 });
 
-// Cache TTL configuration (in seconds)
+// Cache TTL configuration (in milliseconds)
 // eslint-disable-next-line no-undef
-const CACHE_TTL_SECONDS = parseInt(
+const CACHE_TTL_MS = parseInt(
   // eslint-disable-next-line no-undef
   process.env.REACT_APP_CACHE_TTL_SECONDS || '60',
   10
-);
+) * 1000;
 
-// Create cache instance with type policies
+// Create cache instance with simple merge policies
 const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
         movies: {
-          // Custom merge to always use incoming data
+          // Key by arguments to ensure different searches/filters are cached separately
+          keyArgs: ['pagination', 'where'],
           merge(existing, incoming) {
             return incoming;
           },
@@ -34,51 +35,19 @@ const cache = new InMemoryCache({
   },
 });
 
-// Track cache timestamps per query
-const cacheTimestamps = new Map<string, number>();
+// Track when cache was last cleared
+let lastCacheClear = Date.now();
 
-// Helper to get cache key for a query
-const getCacheKey = (fieldName: string, args?: any): string => {
-  return `${fieldName}:${JSON.stringify(args || {})}`;
-};
-
-// Wrap cache write to track timestamps
-const originalWrite = cache.write.bind(cache);
-cache.write = (options: any) => {
-  const result = originalWrite(options);
-
-  // Track timestamp for this query
-  if (options.query) {
-    const queryName = options.query.definitions[0]?.name?.value || 'unknown';
-    const cacheKey = getCacheKey(queryName, options.variables);
-    cacheTimestamps.set(cacheKey, Date.now());
-  }
-
-  return result;
-};
-
-// Periodic cache eviction based on TTL
+// Periodically clear cache after TTL expires
 setInterval(() => {
   const now = Date.now();
-  const expiredKeys: string[] = [];
-
-  cacheTimestamps.forEach((timestamp, key) => {
-    if (now - timestamp > CACHE_TTL_SECONDS * 1000) {
-      expiredKeys.push(key);
-    }
-  });
-
-  // Evict expired entries
-  if (expiredKeys.length > 0) {
-    expiredKeys.forEach((key) => {
-      cacheTimestamps.delete(key);
-    });
-
-    // Clear all query cache entries (simpler approach)
+  if (now - lastCacheClear >= CACHE_TTL_MS) {
+    // Clear the cache
     cache.evict({ id: 'ROOT_QUERY' });
     cache.gc();
+    lastCacheClear = now;
   }
-}, CACHE_TTL_SECONDS * 1000);
+}, 5000); // Check every 5 seconds
 
 export const apolloClient = new ApolloClient({
   link: httpLink,
