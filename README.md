@@ -2,10 +2,9 @@
 
 <img src="./public/BITFLIXLogo.png" alt="BITFLIX" height="60">
 
-# <a href="https://bitflix.bitsofcj.com" target="_blank">https://bitflix.bitsofcj.com</a>
+# [https://bitflix.bitsofcj.com](https://bitflix.bitsofcj.com)
 
-
-A React-based movie browsing application with GraphQL integration, featuring search, filtering, and pagination capabilities.
+A [React](https://reactjs.org/)-based movie browsing application with GraphQL integration, featuring search, filtering, and pagination capabilities.
 
 <img src="./public/BITFLIXscreenshot.png" alt="BitFlix Screenshot" width="800">
 
@@ -20,15 +19,20 @@ A React-based movie browsing application with GraphQL integration, featuring sea
 - **API Proxy** - The API proxy protects the external API authentication & features rate limiting and request timeouts to ensure optimal performance and reliability.
 
 ### Improvements
-- **Caching** - More granular and robust caching strategies in the API proxy and frontend.
-- **Security** - Add helmet.js for security headers | Document other security considerations.
-- **Documentation** - Comprehensive external documentation for business and developer users with detailed diagrams and examples.
-- **Analytics** - Implement Google Analytics, Microsoft Clarity or any other analytics tool(s) for tracking user behavior and improving the BITFLIX experience.
-- **Observability** - Structured logging (winston or pino) | Performance monitoring (Datadog, New Relic, etc...) | Update health check endpoint to check dependencies and provide information about the application's status.
+- **Caching** - Implement more granular and robust caching strategies in the API proxy (with [Redis](https://redis.io/), [DragonflyDB](https://dragonflydb.io/), [Valkey](https://valkey.io/) or similar technologies) and the frontend (with [Apollo Client](https://www.apollographql.com/docs/react/), [React Query](https://react-query.tanstack.com/), [SWR](https://swr.vercel.app/) or similar technologies).
+- **Security** - Implement [helmet.js](https://helmetjs.github.io/) for security headers. Document other security considerations.
+- **Documentation** - Maintain comprehensive external documentation for business and developer users with detailed diagrams and examples.
+- **Analytics** - Implement [Google Analytics](https://analytics.google.com/), [Microsoft Clarity](https://clarity.microsoft.com/) or any other analytics tool(s) for tracking user behavior and improving the BITFLIX experience.
+- **Observability**:
+  - Implement structured logging ([winston](https://github.com/winstonjs/winston) or [Pino](https://getpino.io/))
+  - Performance monitoring ([Datadog](https://www.datadoghq.com/), [New Relic](https://newrelic.com/), etc...)
+  - Update health check endpoint to check dependencies and provide information about the application's status.
 - **SEO** - Implement additional SEO best practices for improved search engine rankings.
-- **Accessibility** - ARIA labels on interactive elements & screen reader testing.
+- **Accessibility** - Implement [ARIA labels](https://www.w3.org/TR/wai-aria-1.2/) on interactive elements & screen reader testing.
 - **CI/CD** - Implement continuous integration and deployment pipelines for automated testing and deployment.
-- **Tech Stack** - Evaluate the app based on business requirements to determine if this is better suited as a Next.js application.
+- **Tech Stack** - Evaluate the app based on business requirements to determine if this is better suited as a [Next.js](https://nextjs.org/) application.
+- **Enhanced Movie Posters & Trailers** - Evaluate the [TMDB API](https://developer.themoviedb.org/reference/getting-started) as a potential tool for supplementing missing movie posters and descriptions, as well as enabling trailer playback in a modal window.
+- **State Management** - In the event that BITFLIX becomes more complex, consider implementing more robust state management solutions ([Redux](https://redux.js.org/), [Zustand](https://github.com/pmndrs/zustand), etc..) to handle complex state interactions.
 
 ---
 
