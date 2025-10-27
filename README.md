@@ -2,6 +2,8 @@
 
 <img src="./public/BITFLIXLogo.png" alt="BITFLIX" height="60">
 
+# [https://bitflix.bitsofcj.com](https://bitflix.bitsofcj.com)
+
 A React-based movie browsing application with GraphQL integration, featuring search, filtering, and pagination capabilities.
 
 <img src="./public/BITFLIXscreenshot.png" alt="BitFlix Screenshot" width="800">
