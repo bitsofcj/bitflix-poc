@@ -2,11 +2,30 @@
 
 <img src="./public/BITFLIXLogo.png" alt="BITFLIX" height="60">
 
-# [https://bitflix.bitsofcj.com](https://bitflix.bitsofcj.com)
+# <a href="https://bitflix.bitsofcj.com" target="_blank">https://bitflix.bitsofcj.com</a>
+
 
 A React-based movie browsing application with GraphQL integration, featuring search, filtering, and pagination capabilities.
 
 <img src="./public/BITFLIXscreenshot.png" alt="BitFlix Screenshot" width="800">
+
+---
+
+## Highlights & Improvements
+
+### Highlights
+
+- **Filter & Realtime Search** - The filter and search functionality work together to allow for searching all movies or filtering by genre, updating movie counts in real-time.
+- **User Experience** - The BITFLIX experience is designed to be intuitive and user-friendly, with a focus on providing a seamless and enjoyable movie browsing experience similar to popular streaming platforms.
+- **API Proxy** - The API proxy protects the external API authentication & features rate limiting and request timeouts to ensure optimal performance and reliability.
+
+### Improvements
+- **Caching** - More granular and robust caching strategies in the API proxy and frontend.
+- **Security** - Add helmet.js for security headers | Document other security considerations.
+- **Documentation** - Comprehensive external documentation for business and developer users with detailed diagrams and examples.
+- **Observability** - Structured logging (winston or pino) | Performance monitoring (Datadog, New Relic, etc...) | Update health check endpoint to check dependencies and provide information about the application's status.
+- **Accessibility** - ARIA labels on interactive elements & screen reader testing.
+- **Tech Stack** - Evaluate the app based on business requirements to determine if this is better suited as a Next.js application.
 
 ---
 
@@ -273,7 +292,7 @@ src/
 
 ## Performance
 
-- **Apollo Client Caching** - 60-second default TTL
+- **Apollo Client Caching** - 60-second default TTL (Configurable via environment variable)
 - **Request Deduplication** - Apollo prevents duplicate requests
 - **Image Optimization** - Lazy loading with error handling
 - **Rate Limiting** - Protects against abuse
