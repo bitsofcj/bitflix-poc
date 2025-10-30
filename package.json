@@ -2,6 +2,7 @@
   "name": "BITFLIX",
   "version": "0.1.0",
   "description": "BITFLIX | Movie Search App",
+  "homepage": ".",
   "keywords": [
     "bitflix",
     "movies",
