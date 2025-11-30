@@ -27,9 +27,6 @@
 .env.production.local
 offline-files
 
-# npm
-.npmrc
-
 # Claude Code local settings
 .claude/*.local.*
 
