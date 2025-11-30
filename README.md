@@ -2,7 +2,7 @@
 
 <img src="./public/BITFLIXLogo.png" alt="BITFLIX" height="60">
 
-# [https://bitflix.bitsofcj.com](https://bitflix.bitsofcj.com)
+# [https://bitflix-poc.vercel.app](https://bitflix-poc.vercel.app)
 
 A [Next.js](https://nextjs.org/)-based movie browsing application with GraphQL integration, featuring search, filtering, and pagination capabilities.
 
