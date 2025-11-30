@@ -2,6 +2,12 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import MovieBrowser from './MovieBrowser';
 import { GET_MOVIES_WITH_COUNT, GET_GENRES } from '@/lib/graphql-queries';
+import { PaginationInput, MovieFilterInput } from '@/lib/graphql-types';
+
+interface GetMoviesWithCountVariables {
+  pagination: PaginationInput;
+  where?: MovieFilterInput;
+}
 
 const mockMovies = [
   {
@@ -41,7 +47,7 @@ const mockGenres = [
   { id: '2', title: 'Comedy', __typename: 'Genre' },
 ];
 
-const createMoviesMock = (variables: any) => ({
+const createMoviesMock = (variables: GetMoviesWithCountVariables) => ({
   request: {
     query: GET_MOVIES_WITH_COUNT,
     variables,
