@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 import { GET_MOVIES_WITH_COUNT, GET_GENRES } from '@/lib/graphql-queries';
 
@@ -50,9 +49,7 @@ describe('App', () => {
   it('should render the main app container', () => {
     render(
       <MockedProvider mocks={[mockMovies, mockGenres]}>
-        <MemoryRouter>
-          <App />
-        </MemoryRouter>
+        <App />
       </MockedProvider>
     );
 
@@ -64,9 +61,7 @@ describe('App', () => {
   it('should render MovieBrowser component', () => {
     render(
       <MockedProvider mocks={[mockMovies, mockGenres]}>
-        <MemoryRouter>
-          <App />
-        </MemoryRouter>
+        <App />
       </MockedProvider>
     );
 

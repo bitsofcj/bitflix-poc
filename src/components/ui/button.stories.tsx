@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Button } from './button';
-import { Play, Download, Trash2 } from 'lucide-react';
 
 const meta: Meta<typeof Button> = {
   title: 'UI/Button',
@@ -10,6 +9,16 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
+    },
+    size: {
+      control: 'select',
+      options: ['default', 'sm', 'lg', 'icon'],
+    },
+  },
   args: {
     onClick: fn(),
   },
@@ -27,7 +36,7 @@ export const Default: Story = {
 export const Destructive: Story = {
   args: {
     variant: 'destructive',
-    children: 'Delete',
+    children: 'Destructive',
   },
 };
 
@@ -73,70 +82,9 @@ export const Large: Story = {
   },
 };
 
-export const WithIcon: Story = {
-  args: {
-    children: (
-      <>
-        <Play />
-        Play Trailer
-      </>
-    ),
-  },
-};
-
-export const IconButton: Story = {
-  args: {
-    size: 'icon',
-    children: <Download />,
-  },
-};
-
 export const Disabled: Story = {
   args: {
     disabled: true,
     children: 'Disabled',
   },
-};
-
-export const DestructiveWithIcon: Story = {
-  args: {
-    variant: 'destructive',
-    children: (
-      <>
-        <Trash2 />
-        Delete Movie
-      </>
-    ),
-  },
-};
-
-export const AllVariants: Story = {
-  render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="flex gap-2 flex-wrap">
-        <Button>Default</Button>
-        <Button variant="destructive">Destructive</Button>
-        <Button variant="outline">Outline</Button>
-        <Button variant="secondary">Secondary</Button>
-        <Button variant="ghost">Ghost</Button>
-        <Button variant="link">Link</Button>
-      </div>
-      <div className="flex gap-2 flex-wrap items-center">
-        <Button size="sm">Small</Button>
-        <Button>Default</Button>
-        <Button size="lg">Large</Button>
-      </div>
-      <div className="flex gap-2 flex-wrap items-center">
-        <Button size="icon-sm">
-          <Play />
-        </Button>
-        <Button size="icon">
-          <Play />
-        </Button>
-        <Button size="icon-lg">
-          <Play />
-        </Button>
-      </div>
-    </div>
-  ),
 };

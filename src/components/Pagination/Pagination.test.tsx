@@ -1,5 +1,4 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import Pagination from './Pagination';
 
 describe('Pagination', () => {
@@ -13,13 +12,11 @@ describe('Pagination', () => {
 
   it('should render current page and total pages', () => {
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={1}
-          totalPages={10}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <Pagination
+        currentPage={1}
+        totalPages={10}
+        onPageChange={mockOnPageChange}
+      />
     );
     expect(screen.getByText('1')).toBeInTheDocument();
     expect(screen.getByText('10')).toBeInTheDocument();
@@ -27,13 +24,11 @@ describe('Pagination', () => {
 
   it('should disable Previous button on first page', () => {
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={1}
-          totalPages={10}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <Pagination
+        currentPage={1}
+        totalPages={10}
+        onPageChange={mockOnPageChange}
+      />
     );
     const prevButton = screen.getByRole('button', { name: /previous/i });
     expect(prevButton).toBeDisabled();
@@ -41,13 +36,11 @@ describe('Pagination', () => {
 
   it('should disable Next button on last page', () => {
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={10}
-          totalPages={10}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <Pagination
+        currentPage={10}
+        totalPages={10}
+        onPageChange={mockOnPageChange}
+      />
     );
     const nextButton = screen.getByRole('button', { name: /next/i });
     expect(nextButton).toBeDisabled();
@@ -55,13 +48,11 @@ describe('Pagination', () => {
 
   it('should call onPageChange when clicking next', () => {
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={1}
-          totalPages={10}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <Pagination
+        currentPage={1}
+        totalPages={10}
+        onPageChange={mockOnPageChange}
+      />
     );
     const nextButton = screen.getByRole('button', { name: /next/i });
     fireEvent.click(nextButton);
@@ -70,13 +61,11 @@ describe('Pagination', () => {
 
   it('should call onPageChange when clicking previous', () => {
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={5}
-          totalPages={10}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <Pagination
+        currentPage={5}
+        totalPages={10}
+        onPageChange={mockOnPageChange}
+      />
     );
     const prevButton = screen.getByRole('button', { name: /previous/i });
     fireEvent.click(prevButton);
@@ -85,13 +74,11 @@ describe('Pagination', () => {
 
   it('should call onPageChange when clicking page number', () => {
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={1}
-          totalPages={10}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <Pagination
+        currentPage={1}
+        totalPages={10}
+        onPageChange={mockOnPageChange}
+      />
     );
     const pageThreeButton = screen.getByRole('button', { name: '3' });
     fireEvent.click(pageThreeButton);
@@ -100,13 +87,11 @@ describe('Pagination', () => {
 
   it('should scroll to top when changing pages', () => {
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={1}
-          totalPages={10}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <Pagination
+        currentPage={1}
+        totalPages={10}
+        onPageChange={mockOnPageChange}
+      />
     );
     const nextButton = screen.getByRole('button', { name: /next/i });
     fireEvent.click(nextButton);
@@ -118,26 +103,22 @@ describe('Pagination', () => {
 
   it('should show ellipsis for many pages', () => {
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={5}
-          totalPages={20}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <Pagination
+        currentPage={5}
+        totalPages={20}
+        onPageChange={mockOnPageChange}
+      />
     );
     expect(screen.getAllByText('...').length).toBeGreaterThan(0);
   });
 
   it('should highlight current page', () => {
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={5}
-          totalPages={10}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <Pagination
+        currentPage={5}
+        totalPages={10}
+        onPageChange={mockOnPageChange}
+      />
     );
     const currentPageButton = screen.getByRole('button', { name: '5' });
     expect(currentPageButton).toHaveClass('bg-primary');
@@ -145,13 +126,11 @@ describe('Pagination', () => {
 
   it('should show all pages when total is 5 or less', () => {
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={2}
-          totalPages={5}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <Pagination
+        currentPage={2}
+        totalPages={5}
+        onPageChange={mockOnPageChange}
+      />
     );
     expect(screen.getByRole('button', { name: '1' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '2' })).toBeInTheDocument();

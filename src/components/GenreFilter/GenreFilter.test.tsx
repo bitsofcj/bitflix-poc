@@ -1,6 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import { MemoryRouter } from 'react-router-dom';
 import GenreFilter from './GenreFilter';
 import { GET_GENRES } from '@/lib/graphql-queries';
 
@@ -45,9 +44,7 @@ describe('GenreFilter', () => {
   it('should render loading state initially', () => {
     render(
       <MockedProvider mocks={mocks}>
-        <MemoryRouter>
-          <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
-        </MemoryRouter>
+        <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
       </MockedProvider>
     );
     expect(screen.getByText('Loading genres...')).toBeInTheDocument();
@@ -56,9 +53,7 @@ describe('GenreFilter', () => {
   it('should render genres after loading', async () => {
     render(
       <MockedProvider mocks={mocks}>
-        <MemoryRouter>
-          <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
-        </MemoryRouter>
+        <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
       </MockedProvider>
     );
 
@@ -76,9 +71,7 @@ describe('GenreFilter', () => {
   it('should render "All" button', async () => {
     render(
       <MockedProvider mocks={mocks}>
-        <MemoryRouter>
-          <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
-        </MemoryRouter>
+        <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
       </MockedProvider>
     );
 
@@ -90,12 +83,10 @@ describe('GenreFilter', () => {
   it('should call onGenreChange when clicking All', async () => {
     render(
       <MockedProvider mocks={mocks}>
-        <MemoryRouter>
-          <GenreFilter
-            selectedGenre="Action"
-            onGenreChange={mockOnGenreChange}
-          />
-        </MemoryRouter>
+        <GenreFilter
+          selectedGenre="Action"
+          onGenreChange={mockOnGenreChange}
+        />
       </MockedProvider>
     );
 
@@ -111,9 +102,7 @@ describe('GenreFilter', () => {
   it('should call onGenreChange when clicking genre', async () => {
     render(
       <MockedProvider mocks={mocks}>
-        <MemoryRouter>
-          <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
-        </MemoryRouter>
+        <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
       </MockedProvider>
     );
 
@@ -131,12 +120,10 @@ describe('GenreFilter', () => {
   it('should highlight selected genre', async () => {
     render(
       <MockedProvider mocks={mocks}>
-        <MemoryRouter>
-          <GenreFilter
-            selectedGenre="Action"
-            onGenreChange={mockOnGenreChange}
-          />
-        </MemoryRouter>
+        <GenreFilter
+          selectedGenre="Action"
+          onGenreChange={mockOnGenreChange}
+        />
       </MockedProvider>
     );
 
@@ -153,9 +140,7 @@ describe('GenreFilter', () => {
   it('should highlight All when selectedGenre is "all"', async () => {
     render(
       <MockedProvider mocks={mocks}>
-        <MemoryRouter>
-          <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
-        </MemoryRouter>
+        <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
       </MockedProvider>
     );
 
@@ -170,9 +155,7 @@ describe('GenreFilter', () => {
   it('should render error state on fetch failure', async () => {
     render(
       <MockedProvider mocks={errorMock}>
-        <MemoryRouter>
-          <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
-        </MemoryRouter>
+        <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
       </MockedProvider>
     );
 
@@ -184,9 +167,7 @@ describe('GenreFilter', () => {
   it('should render filter heading', () => {
     render(
       <MockedProvider mocks={mocks}>
-        <MemoryRouter>
-          <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
-        </MemoryRouter>
+        <GenreFilter selectedGenre="all" onGenreChange={mockOnGenreChange} />
       </MockedProvider>
     );
     expect(screen.getByText('Filter by Genre')).toBeInTheDocument();

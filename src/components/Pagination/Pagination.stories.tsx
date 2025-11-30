@@ -9,6 +9,14 @@ const meta: Meta<typeof Pagination> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  argTypes: {
+    currentPage: {
+      control: { type: 'number', min: 1, max: 100 },
+    },
+    totalPages: {
+      control: { type: 'number', min: 1, max: 100 },
+    },
+  },
   args: {
     onPageChange: fn(),
   },
@@ -38,10 +46,10 @@ export const LastPage: Story = {
   },
 };
 
-export const FewPages: Story = {
+export const SinglePage: Story = {
   args: {
-    currentPage: 2,
-    totalPages: 3,
+    currentPage: 1,
+    totalPages: 1,
   },
 };
 
@@ -52,9 +60,9 @@ export const ManyPages: Story = {
   },
 };
 
-export const SinglePage: Story = {
+export const FewPages: Story = {
   args: {
-    currentPage: 1,
-    totalPages: 1,
+    currentPage: 2,
+    totalPages: 3,
   },
 };

@@ -4,7 +4,7 @@
 
 # [https://bitflix.bitsofcj.com](https://bitflix.bitsofcj.com)
 
-A [React](https://reactjs.org/)-based movie browsing application with GraphQL integration, featuring search, filtering, and pagination capabilities.
+A [Next.js](https://nextjs.org/)-based movie browsing application with GraphQL integration, featuring search, filtering, and pagination capabilities.
 
 <img src="./public/BITFLIXscreenshot.png" alt="BitFlix Screenshot" width="800">
 
@@ -19,8 +19,10 @@ A [React](https://reactjs.org/)-based movie browsing application with GraphQL in
 - **API Proxy** - The API proxy protects the external API authentication & features rate limiting and request timeouts to ensure optimal performance and reliability.
 
 ### Improvements
+- **Testing** - ✅ Achieved 92.3% test coverage with comprehensive unit, component, integration, and API route tests
+- **Component Documentation** - ✅ Implemented [Storybook](https://storybook.js.org/) for component development, testing, and documentation
+- **Security** - ✅ Implemented comprehensive security headers based on [helmet.js](https://helmetjs.github.io/) principles
 - **Caching** - Implement more granular and robust caching strategies in the API proxy (with [Redis](https://redis.io/), [DragonflyDB](https://dragonflydb.io/), [Valkey](https://valkey.io/) or similar technologies) and the frontend (with [Apollo Client](https://www.apollographql.com/docs/react/), [React Query](https://react-query.tanstack.com/), [SWR](https://swr.vercel.app/) or similar technologies).
-- **Security** - Implement [helmet.js](https://helmetjs.github.io/) for security headers. Document other security considerations.
 - **Documentation** - Maintain comprehensive external documentation for business and developer users with detailed diagrams and examples.
 - **Analytics** - Implement [Google Analytics](https://analytics.google.com/), [Microsoft Clarity](https://clarity.microsoft.com/) or any other analytics tool(s) for tracking user behavior and improving the BITFLIX experience.
 - **Observability**:
@@ -30,13 +32,15 @@ A [React](https://reactjs.org/)-based movie browsing application with GraphQL in
 - **SEO** - Implement additional SEO best practices for improved search engine rankings.
 - **Accessibility** - Implement [ARIA labels](https://www.w3.org/TR/wai-aria-1.2/) on interactive elements & screen reader testing.
 - **CI/CD** - Implement continuous integration and deployment pipelines for automated testing and deployment.
-- **Tech Stack** - Evaluate the app based on business requirements to determine if this is better suited as a [Next.js](https://nextjs.org/) application.
+- **Tech Stack** - ✅ Migrated to [Next.js](https://nextjs.org/) with App Router for improved performance and SEO.
 - **User Experience Enhancements**:
   - Implement sorting by title, release date, rating, etc...
   - Update MovieFilterInput of backend GraphQL server to support searching by actors, directors, writers, publish year, etc...
   - Evaluate the [TMDB API](https://developer.themoviedb.org/reference/getting-started) as a potential tool for supplementing missing movie posters and descriptions, as well as enabling trailer playback in a modal window.
   - Implement lazy loading for movie posters and descriptions to improve initial page load times.
 - **State Management** - In the event that BITFLIX becomes more complex, consider implementing more robust state management solutions ([Redux](https://redux.js.org/), [Zustand](https://github.com/pmndrs/zustand), etc..) to handle complex state interactions.
+- **Code Formatting** - Implement [Prettier](https://prettier.io/) for consistent code formatting across the project
+- **Additional Security** - Document security considerations, implement additional security best practices
 
 ---
 
@@ -58,18 +62,16 @@ A [React](https://reactjs.org/)-based movie browsing application with GraphQL in
 
 ### Frontend
 
+- **Next.js 16** with App Router
 - **React 18** with TypeScript
 - **Apollo Client** for GraphQL
-- **React Router v6** for navigation
 - **Tailwind CSS** for styling
 - **Lucide React** for icons
-- **RxJS** for reactive patterns
 
 ### Backend
 
-- **Express.js** proxy server
-- **Node-Fetch** for upstream API calls
-- **Rate Limiting** with configurable thresholds
+- **Next.js API Routes** for GraphQL proxy
+- **Server-side API key protection** - API keys never exposed to client
 - **Request Timeouts** for stability
 - **CORS** support
 
@@ -77,15 +79,16 @@ A [React](https://reactjs.org/)-based movie browsing application with GraphQL in
 
 - **Jest** for unit and integration tests
 - **React Testing Library** for component tests
-- **Supertest** for API endpoint tests
 - **MockedProvider** for GraphQL mocking
 
 ### Development Tools
 
-- **CRACO** for custom webpack config
-- **ESLint** for linting
-- **Prettier** for code formatting
-- **Storybook 8.6** for component development and documentation
+- **Turbopack** for fast builds
+- **ESLint** for linting (with Next.js config)
+- **Storybook 10** for component development and documentation
+  - Vitest integration for component testing
+  - Accessibility (a11y) addon
+  - Auto-generated documentation
 
 ---
 
@@ -93,7 +96,7 @@ A [React](https://reactjs.org/)-based movie browsing application with GraphQL in
 
 ### Prerequisites
 
-- Node.js >= 16.0 <18.0.0
+- Node.js >= 18.18.0
 - npm or yarn
 
 ### Installation
@@ -111,13 +114,15 @@ cd bitflix-poc
 npm install
 ```
 
-3. Create a `.env` file from the example:
+Note: An `.npmrc` file with `legacy-peer-deps=true` is included to handle peer dependency conflicts with legacy packages.
+
+3. Create a `.env.local` file from the example:
 
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 ```
 
-Then update the `.env` file with your actual API credentials:
+Then update the `.env.local` file with your actual API credentials:
 - Replace `<your-api-url>` with your movies API URL
 - Replace `<your-api-key>` with your API key
 
@@ -125,20 +130,16 @@ Then update the `.env` file with your actual API credentials:
 
 ## Environment Variables
 
-### Frontend Variables (Build-time)
+### Client-side Variables (Accessible in browser)
 
-- `REACT_APP_GRAPHQL_URL` - GraphQL endpoint URL
-- `REACT_APP_CACHE_TTL_SECONDS` - Apollo cache TTL in seconds (default: 60)
-- `REACT_APP_ITEMS_PER_PAGE` - Number of items to display per page (default: 12)
+- `NEXT_PUBLIC_GRAPHQL_URL` - GraphQL endpoint URL (default: `/api/graphql`)
+- `NEXT_PUBLIC_CACHE_TTL_SECONDS` - Apollo cache TTL in seconds (default: 60)
+- `NEXT_PUBLIC_ITEMS_PER_PAGE` - Number of items to display per page (default: 12)
 
-### Backend Variables (Runtime)
+### Server-side Only Variables (API Keys - Secure)
 
-- `PORT` - Server port (default: 3000)
-- `MOVIES_API_URL` - Upstream API URL
-- `MOVIES_API_KEY` - API authentication key
-- `RATE_LIMIT_WINDOW_MS` - Rate limit window (default: 60000)
-- `RATE_LIMIT_MAX_REQUESTS` - Max requests per window (default: 100)
-- `MAX_REQUEST_SIZE` - Max payload size (default: 1mb)
+- `MOVIES_API_URL` - Upstream API URL (never exposed to client)
+- `MOVIES_API_KEY` - API authentication key (never exposed to client)
 - `FETCH_TIMEOUT_MS` - Upstream timeout (default: 10000)
 
 ### Running the Application
@@ -146,10 +147,19 @@ Then update the `.env` file with your actual API credentials:
 #### Development Mode
 
 ```bash
+npm run dev
+```
+
+Starts the Next.js development server on http://localhost:3000
+
+#### Production Build
+
+```bash
+npm run build
 npm start
 ```
 
-Starts the server with proxy on http://localhost:3000
+Builds and starts the production server
 
 #### Storybook
 
@@ -167,12 +177,14 @@ Build static Storybook for deployment:
 npm run build-storybook
 ```
 
-**Available Components:**
-- Button (14+ variants)
+**Available Component Stories:**
 - MovieCard (5 variants)
 - Pagination (6 scenarios)
+- GenreFilter (5 states)
+- Button (9 variants)
+- Card (4 layouts)
 
-Storybook v8.6.14 includes automatic documentation generation via autodocs.
+Storybook v10.1 includes automatic documentation generation via autodocs and accessibility testing via the a11y addon.
 
 ---
 
@@ -202,52 +214,65 @@ npm run test:coverage
 
 This generates a coverage report in the `coverage/` directory and prints a summary to the console.
 
-### Run Server Tests
+### Test Coverage
 
-```bash
-npm run test:server
-```
+The project maintains **92.3%** overall statement coverage with the following metrics:
 
-### Test Coverage Thresholds
-
-The project maintains **70%** coverage across:
-
-- Branches
-- Functions
-- Lines
-- Statements
+- **92.3%** Statements
+- **88.03%** Branches
+- **88.09%** Functions
+- **93.48%** Lines
 
 ### What's Tested
 
-#### Unit Tests (`helpers.test.ts`)
+#### Unit Tests
 
-- ✅ `getYear()` - Date parsing and edge cases
-- ✅ `formatDuration()` - ISO 8601 duration formatting
-- ✅ `getPageNumbers()` - Pagination logic
+- ✅ **Helpers** (`helpers.test.ts`)
+  - `getYear()` - Date parsing and edge cases
+  - `formatDuration()` - ISO 8601 duration formatting
+  - `getPageNumbers()` - Pagination logic
 
 #### Component Tests
 
-- ✅ **MovieCard** - Rendering, null handling, YouTube links
-- ✅ **Pagination** - Navigation, disabled states, page numbers
-- ✅ **GenreFilter** - Loading, selection, filtering
+- ✅ **App** (`App.test.tsx`) - Main app component rendering
+- ✅ **MovieCard** (`MovieCard.test.tsx`) - Rendering, null handling, YouTube links
+- ✅ **Pagination** (`Pagination.test.tsx`) - Navigation, disabled states, page numbers
+- ✅ **GenreFilter** (`GenreFilter.test.tsx`) - Loading, selection, filtering
+- ✅ **UI Components** (`card.test.tsx`) - Card component variants
 
-#### Integration Tests (`MovieBrowser.test.tsx`)
+#### Integration Tests
 
-- ✅ Search functionality
-- ✅ Genre filtering
-- ✅ Pagination
-- ✅ Loading states
-- ✅ Error handling
-- ✅ Empty states
+- ✅ **MovieBrowser** (`MovieBrowser.test.tsx`)
+  - Search functionality
+  - Genre filtering
+  - Pagination
+  - Loading states
+  - Error handling
+  - Empty states
 
-#### Server Tests (`server.test.js`)
+#### Next.js App Tests
 
-- ✅ `/healthcheck` endpoint
-- ✅ `/graphql` POST endpoint
-- ✅ CORS preflight requests
-- ✅ Request size limits
-- ✅ Timeout handling
-- ✅ Error responses
+- ✅ **Layout** (`layout.test.tsx`) - Root layout, metadata, structure
+- ✅ **Home Page** (`page.test.tsx`) - Page component rendering
+
+#### API Route Tests
+
+- ✅ **GraphQL Proxy** (`app/api/graphql/route.test.ts`)
+  - POST endpoint functionality
+  - CORS headers
+  - Error handling (timeout, network errors)
+  - Request body forwarding
+  - OPTIONS preflight requests
+- ✅ **Health Check** (`app/api/healthcheck/route.test.ts`)
+  - GET endpoint functionality
+  - Query parameter handling
+  - Timeout and error handling
+  - Status code preservation
+
+#### Library Tests
+
+- ✅ **Apollo Client** (`apollo-client.test.ts`) - Client configuration, cache policies
+- ✅ **ApolloWrapper** (`ApolloWrapper.test.tsx`) - Provider component
 
 ---
 
@@ -259,45 +284,45 @@ The project maintains **70%** coverage across:
 npm run lint
 ```
 
-### Formatting
-
-```bash
-# Check formatting
-npm run format:check
-
-# Fix formatting
-npm run format:write
-```
+Runs ESLint with Next.js configuration to check code quality.
 
 ---
 
 ## Architecture
 
-### Frontend Architecture
+### Application Architecture
 
 ```
+app/
+├── api/
+│   ├── graphql/
+│   │   └── route.ts        # GraphQL proxy endpoint
+│   └── healthcheck/
+│       └── route.ts        # Health check endpoint
+├── layout.tsx              # Root layout
+└── page.tsx                # Home page
+
 src/
-├── components/          # React components
-│   ├── MovieCard/      # Movie display card
-│   ├── MovieBrowser/   # Main app container
-│   ├── Pagination/     # Page navigation
-│   ├── GenreFilter/    # Genre selection
-│   └── ui/             # Shared UI components
-├── lib/
-│   ├── apollo-client.ts    # Apollo Client setup
-│   ├── graphql-queries.ts  # GraphQL queries
-│   ├── graphql-types.ts    # TypeScript types
-│   └── helpers.ts          # Utility functions
-└── App.tsx             # Root component
+├── components/             # React components
+│   ├── ApolloWrapper.tsx  # Apollo Client provider
+│   ├── MovieCard/         # Movie display card
+│   ├── MovieBrowser/      # Main app container
+│   ├── Pagination/        # Page navigation
+│   ├── GenreFilter/       # Genre selection
+│   └── ui/                # Shared UI components
+└── lib/
+    ├── apollo-client.ts   # Apollo Client setup
+    ├── graphql-queries.ts # GraphQL queries
+    ├── graphql-types.ts   # TypeScript types
+    └── helpers.ts         # Utility functions
 ```
 
-### Backend Architecture
+### API Routes Architecture
 
-- Express proxy server
-- GraphQL endpoint at `/graphql`
-- Health check at `/healthcheck`
-- Static file serving from `/build`
-- Rate limiting on API endpoints only
+- Next.js API Routes handle server-side logic
+- GraphQL proxy at `/api/graphql`
+- Health check at `/api/healthcheck`
+- API keys secured server-side (never exposed to client)
 
 ---
 
@@ -312,11 +337,20 @@ src/
 
 ## Security
 
-- Request size limits (default: 1mb)
+- **API Key Protection** - API keys only accessible server-side, never exposed to client
+- **Next.js API Routes** - Server-side proxy prevents direct API access
+- **Security Headers** - Comprehensive security headers configured:
+  - `Strict-Transport-Security` - Enforces HTTPS connections
+  - `X-Frame-Options` - Prevents clickjacking attacks
+  - `X-Content-Type-Options` - Prevents MIME-type sniffing
+  - `X-XSS-Protection` - Enables XSS filtering
+  - `Referrer-Policy` - Controls referrer information
+  - `Permissions-Policy` - Restricts browser features
+  - `X-DNS-Prefetch-Control` - Controls DNS prefetching
 - Request timeouts (default: 10s)
-- Rate limiting per IP
 - CORS configuration
 - No sensitive data in logs
+- Environment variables properly scoped (NEXT_PUBLIC_ for client, no prefix for server-only)
 
 ---
 
