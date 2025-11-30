@@ -9,7 +9,7 @@ const originalWarn = console.warn;
 const originalError = console.error;
 
 beforeAll(() => {
-  console.warn = (...args: any[]) => {
+  console.warn = (...args: unknown[]) => {
     const message = args[0]?.toString() || '';
 
     // Suppress Apollo Client deprecation warnings
@@ -26,7 +26,7 @@ beforeAll(() => {
     originalWarn(...args);
   };
 
-  console.error = (...args: any[]) => {
+  console.error = (...args: unknown[]) => {
     const message = args[0]?.toString() || '';
 
     // Suppress ReactDOMTestUtils.act deprecation

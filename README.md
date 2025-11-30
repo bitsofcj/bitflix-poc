@@ -4,7 +4,7 @@
 
 # [https://bitflix.bitsofcj.com](https://bitflix.bitsofcj.com)
 
-A [React](https://reactjs.org/)-based movie browsing application with GraphQL integration, featuring search, filtering, and pagination capabilities.
+A [Next.js](https://nextjs.org/)-based movie browsing application with GraphQL integration, featuring search, filtering, and pagination capabilities.
 
 <img src="./public/BITFLIXscreenshot.png" alt="BitFlix Screenshot" width="800">
 
@@ -30,7 +30,7 @@ A [React](https://reactjs.org/)-based movie browsing application with GraphQL in
 - **SEO** - Implement additional SEO best practices for improved search engine rankings.
 - **Accessibility** - Implement [ARIA labels](https://www.w3.org/TR/wai-aria-1.2/) on interactive elements & screen reader testing.
 - **CI/CD** - Implement continuous integration and deployment pipelines for automated testing and deployment.
-- **Tech Stack** - Evaluate the app based on business requirements to determine if this is better suited as a [Next.js](https://nextjs.org/) application.
+- **Tech Stack** - ✅ Migrated to [Next.js](https://nextjs.org/) with App Router for improved performance and SEO.
 - **User Experience Enhancements**:
   - Implement sorting by title, release date, rating, etc...
   - Update MovieFilterInput of backend GraphQL server to support searching by actors, directors, writers, publish year, etc...
@@ -58,18 +58,16 @@ A [React](https://reactjs.org/)-based movie browsing application with GraphQL in
 
 ### Frontend
 
+- **Next.js 16** with App Router
 - **React 18** with TypeScript
 - **Apollo Client** for GraphQL
-- **React Router v6** for navigation
 - **Tailwind CSS** for styling
 - **Lucide React** for icons
-- **RxJS** for reactive patterns
 
 ### Backend
 
-- **Express.js** proxy server
-- **Node-Fetch** for upstream API calls
-- **Rate Limiting** with configurable thresholds
+- **Next.js API Routes** for GraphQL proxy
+- **Server-side API key protection** - API keys never exposed to client
 - **Request Timeouts** for stability
 - **CORS** support
 
@@ -82,8 +80,8 @@ A [React](https://reactjs.org/)-based movie browsing application with GraphQL in
 
 ### Development Tools
 
-- **CRACO** for custom webpack config
-- **ESLint** for linting
+- **Turbopack** for fast builds
+- **ESLint** for linting (with Next.js config)
 - **Prettier** for code formatting
 - **Storybook 8.6** for component development and documentation
 
@@ -111,13 +109,15 @@ cd bitflix-poc
 npm install
 ```
 
-3. Create a `.env` file from the example:
+Note: An `.npmrc` file with `legacy-peer-deps=true` is included to handle peer dependency conflicts with legacy packages.
+
+3. Create a `.env.local` file from the example:
 
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 ```
 
-Then update the `.env` file with your actual API credentials:
+Then update the `.env.local` file with your actual API credentials:
 - Replace `<your-api-url>` with your movies API URL
 - Replace `<your-api-key>` with your API key
 
@@ -125,20 +125,16 @@ Then update the `.env` file with your actual API credentials:
 
 ## Environment Variables
 
-### Frontend Variables (Build-time)
+### Client-side Variables (Accessible in browser)
 
-- `REACT_APP_GRAPHQL_URL` - GraphQL endpoint URL
-- `REACT_APP_CACHE_TTL_SECONDS` - Apollo cache TTL in seconds (default: 60)
-- `REACT_APP_ITEMS_PER_PAGE` - Number of items to display per page (default: 12)
+- `NEXT_PUBLIC_GRAPHQL_URL` - GraphQL endpoint URL (default: `/api/graphql`)
+- `NEXT_PUBLIC_CACHE_TTL_SECONDS` - Apollo cache TTL in seconds (default: 60)
+- `NEXT_PUBLIC_ITEMS_PER_PAGE` - Number of items to display per page (default: 12)
 
-### Backend Variables (Runtime)
+### Server-side Only Variables (API Keys - Secure)
 
-- `PORT` - Server port (default: 3000)
-- `MOVIES_API_URL` - Upstream API URL
-- `MOVIES_API_KEY` - API authentication key
-- `RATE_LIMIT_WINDOW_MS` - Rate limit window (default: 60000)
-- `RATE_LIMIT_MAX_REQUESTS` - Max requests per window (default: 100)
-- `MAX_REQUEST_SIZE` - Max payload size (default: 1mb)
+- `MOVIES_API_URL` - Upstream API URL (never exposed to client)
+- `MOVIES_API_KEY` - API authentication key (never exposed to client)
 - `FETCH_TIMEOUT_MS` - Upstream timeout (default: 10000)
 
 ### Running the Application
@@ -146,10 +142,19 @@ Then update the `.env` file with your actual API credentials:
 #### Development Mode
 
 ```bash
+npm run dev
+```
+
+Starts the Next.js development server on http://localhost:3000
+
+#### Production Build
+
+```bash
+npm run build
 npm start
 ```
 
-Starts the server with proxy on http://localhost:3000
+Builds and starts the production server
 
 #### Storybook
 
@@ -273,31 +278,39 @@ npm run format:write
 
 ## Architecture
 
-### Frontend Architecture
+### Application Architecture
 
 ```
+app/
+├── api/
+│   ├── graphql/
+│   │   └── route.ts        # GraphQL proxy endpoint
+│   └── healthcheck/
+│       └── route.ts        # Health check endpoint
+├── layout.tsx              # Root layout
+└── page.tsx                # Home page
+
 src/
-├── components/          # React components
-│   ├── MovieCard/      # Movie display card
-│   ├── MovieBrowser/   # Main app container
-│   ├── Pagination/     # Page navigation
-│   ├── GenreFilter/    # Genre selection
-│   └── ui/             # Shared UI components
-├── lib/
-│   ├── apollo-client.ts    # Apollo Client setup
-│   ├── graphql-queries.ts  # GraphQL queries
-│   ├── graphql-types.ts    # TypeScript types
-│   └── helpers.ts          # Utility functions
-└── App.tsx             # Root component
+├── components/             # React components
+│   ├── ApolloWrapper.tsx  # Apollo Client provider
+│   ├── MovieCard/         # Movie display card
+│   ├── MovieBrowser/      # Main app container
+│   ├── Pagination/        # Page navigation
+│   ├── GenreFilter/       # Genre selection
+│   └── ui/                # Shared UI components
+└── lib/
+    ├── apollo-client.ts   # Apollo Client setup
+    ├── graphql-queries.ts # GraphQL queries
+    ├── graphql-types.ts   # TypeScript types
+    └── helpers.ts         # Utility functions
 ```
 
-### Backend Architecture
+### API Routes Architecture
 
-- Express proxy server
-- GraphQL endpoint at `/graphql`
-- Health check at `/healthcheck`
-- Static file serving from `/build`
-- Rate limiting on API endpoints only
+- Next.js API Routes handle server-side logic
+- GraphQL proxy at `/api/graphql`
+- Health check at `/api/healthcheck`
+- API keys secured server-side (never exposed to client)
 
 ---
 
@@ -312,11 +325,12 @@ src/
 
 ## Security
 
-- Request size limits (default: 1mb)
+- **API Key Protection** - API keys only accessible server-side, never exposed to client
+- **Next.js API Routes** - Server-side proxy prevents direct API access
 - Request timeouts (default: 10s)
-- Rate limiting per IP
 - CORS configuration
 - No sensitive data in logs
+- Environment variables properly scoped (NEXT_PUBLIC_ for client, no prefix for server-only)
 
 ---
 

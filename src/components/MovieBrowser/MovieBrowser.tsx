@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { Search } from 'lucide-react';
@@ -12,8 +14,7 @@ import type {
   PaginationInput,
 } from '@/lib/graphql-types';
 
-// eslint-disable-next-line no-undef
-const ITEMS_PER_PAGE = parseInt(process.env.REACT_APP_ITEMS_PER_PAGE || '12', 10);
+const ITEMS_PER_PAGE = parseInt(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE || '12', 10);
 
 export default function MovieBrowser() {
   const [searchQuery, setSearchQuery] = useState('');

@@ -1,3 +1,5 @@
+'use client';
+
 import { useQuery } from '@apollo/client';
 import { Button } from '@/components/ui/button';
 import { GET_GENRES } from '@/lib/graphql-queries';

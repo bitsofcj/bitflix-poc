@@ -1,15 +1,12 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 
 const httpLink = new HttpLink({
-  // eslint-disable-next-line no-undef
-  uri: process.env.REACT_APP_GRAPHQL_URL || 'http://localhost:3000/graphql',
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_URL || '/api/graphql',
 });
 
 // Cache TTL configuration (in milliseconds)
-// eslint-disable-next-line no-undef
 const CACHE_TTL_MS = parseInt(
-  // eslint-disable-next-line no-undef
-  process.env.REACT_APP_CACHE_TTL_SECONDS || '60',
+  process.env.NEXT_PUBLIC_CACHE_TTL_SECONDS || '60',
   10
 ) * 1000;
 
