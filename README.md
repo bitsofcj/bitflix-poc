@@ -20,8 +20,9 @@ A [Next.js](https://nextjs.org/)-based movie browsing application with GraphQL i
 
 ### Improvements
 - **Testing** - ✅ Achieved 92.3% test coverage with comprehensive unit, component, integration, and API route tests
+- **Component Documentation** - ✅ Implemented [Storybook](https://storybook.js.org/) for component development, testing, and documentation
+- **Security** - ✅ Implemented comprehensive security headers based on [helmet.js](https://helmetjs.github.io/) principles
 - **Caching** - Implement more granular and robust caching strategies in the API proxy (with [Redis](https://redis.io/), [DragonflyDB](https://dragonflydb.io/), [Valkey](https://valkey.io/) or similar technologies) and the frontend (with [Apollo Client](https://www.apollographql.com/docs/react/), [React Query](https://react-query.tanstack.com/), [SWR](https://swr.vercel.app/) or similar technologies).
-- **Security** - Implement [helmet.js](https://helmetjs.github.io/) for security headers. Document other security considerations.
 - **Documentation** - Maintain comprehensive external documentation for business and developer users with detailed diagrams and examples.
 - **Analytics** - Implement [Google Analytics](https://analytics.google.com/), [Microsoft Clarity](https://clarity.microsoft.com/) or any other analytics tool(s) for tracking user behavior and improving the BITFLIX experience.
 - **Observability**:
@@ -32,7 +33,6 @@ A [Next.js](https://nextjs.org/)-based movie browsing application with GraphQL i
 - **Accessibility** - Implement [ARIA labels](https://www.w3.org/TR/wai-aria-1.2/) on interactive elements & screen reader testing.
 - **CI/CD** - Implement continuous integration and deployment pipelines for automated testing and deployment.
 - **Tech Stack** - ✅ Migrated to [Next.js](https://nextjs.org/) with App Router for improved performance and SEO.
-- **Component Documentation** - Implement [Storybook](https://storybook.js.org/) for component development, testing, and documentation
 - **User Experience Enhancements**:
   - Implement sorting by title, release date, rating, etc...
   - Update MovieFilterInput of backend GraphQL server to support searching by actors, directors, writers, publish year, etc...
@@ -40,6 +40,7 @@ A [Next.js](https://nextjs.org/)-based movie browsing application with GraphQL i
   - Implement lazy loading for movie posters and descriptions to improve initial page load times.
 - **State Management** - In the event that BITFLIX becomes more complex, consider implementing more robust state management solutions ([Redux](https://redux.js.org/), [Zustand](https://github.com/pmndrs/zustand), etc..) to handle complex state interactions.
 - **Code Formatting** - Implement [Prettier](https://prettier.io/) for consistent code formatting across the project
+- **Additional Security** - Document security considerations, implement additional security best practices
 
 ---
 
@@ -84,6 +85,10 @@ A [Next.js](https://nextjs.org/)-based movie browsing application with GraphQL i
 
 - **Turbopack** for fast builds
 - **ESLint** for linting (with Next.js config)
+- **Storybook 10** for component development and documentation
+  - Vitest integration for component testing
+  - Accessibility (a11y) addon
+  - Auto-generated documentation
 
 ---
 
@@ -155,6 +160,31 @@ npm start
 ```
 
 Builds and starts the production server
+
+#### Storybook
+
+Run the component library in development mode:
+
+```bash
+npm run storybook
+```
+
+Opens Storybook on http://localhost:6006
+
+Build static Storybook for deployment:
+
+```bash
+npm run build-storybook
+```
+
+**Available Component Stories:**
+- MovieCard (5 variants)
+- Pagination (6 scenarios)
+- GenreFilter (5 states)
+- Button (9 variants)
+- Card (4 layouts)
+
+Storybook v10.1 includes automatic documentation generation via autodocs and accessibility testing via the a11y addon.
 
 ---
 
@@ -309,6 +339,14 @@ src/
 
 - **API Key Protection** - API keys only accessible server-side, never exposed to client
 - **Next.js API Routes** - Server-side proxy prevents direct API access
+- **Security Headers** - Comprehensive security headers configured:
+  - `Strict-Transport-Security` - Enforces HTTPS connections
+  - `X-Frame-Options` - Prevents clickjacking attacks
+  - `X-Content-Type-Options` - Prevents MIME-type sniffing
+  - `X-XSS-Protection` - Enables XSS filtering
+  - `Referrer-Policy` - Controls referrer information
+  - `Permissions-Policy` - Restricts browser features
+  - `X-DNS-Prefetch-Control` - Controls DNS prefetching
 - Request timeouts (default: 10s)
 - CORS configuration
 - No sensitive data in logs
